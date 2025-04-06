@@ -1,7 +1,12 @@
 package com.r4men.notes.data.models
 
-class Note(val title: String, val data: NoteData) {
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-
-
-}
+@Entity
+class Note(
+    @PrimaryKey(autoGenerate = true) val id: Int,
+    @ColumnInfo val title: String,
+    @ColumnInfo val noteValue: String?
+)
