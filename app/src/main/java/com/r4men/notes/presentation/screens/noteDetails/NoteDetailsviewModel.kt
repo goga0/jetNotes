@@ -7,9 +7,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
+import javax.inject.Inject
 
 @HiltViewModel
-class NoteDetailsViewModel : ViewModel() {
+class NoteDetailsViewModel @Inject constructor(): ViewModel() {
 
     private var hasLoadedInitialData = false
 

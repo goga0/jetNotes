@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.r4men.notes.presentation.ui.components.DetailsScaffold
@@ -16,7 +17,7 @@ import com.r4men.notes.presentation.ui.theme.NotesTheme
 
 @Composable
 fun NoteDetailsRoot(
-    viewModel: NoteDetailsViewModel = hiltViewModel<NoteDetailsViewModel>(),
+    viewModel: NoteDetailsViewModel = hiltViewModel(),
     noteId: Int
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
