@@ -2,12 +2,16 @@ package com.r4men.notes.presentation.screens.notesList
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.r4men.notes.domain.NoteRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
+import javax.inject.Inject
 
-class NotesListViewModel : ViewModel() {
+@HiltViewModel
+class NotesListViewModel @Inject constructor(private val noteRepository: NoteRepository) : ViewModel() {
 
     private var hasLoadedInitialData = false
 
