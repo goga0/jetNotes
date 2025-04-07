@@ -2,7 +2,7 @@ package com.r4men.notes.data.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.r4men.notes.data.NoteDao
+import com.r4men.notes.data.dao.NoteDao
 import com.r4men.notes.data.models.Note
 
 

@@ -34,7 +34,7 @@ import com.r4men.notes.presentation.ui.theme.NotesTheme
 
 @Composable
 fun NotesListRoot(
-    viewModel: NotesListViewModel = viewModel()
+    viewModel: NotesListViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 

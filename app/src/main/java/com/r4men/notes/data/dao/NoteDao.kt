@@ -1,7 +1,6 @@
-package com.r4men.notes.data
+package com.r4men.notes.data.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
@@ -17,7 +16,7 @@ interface NoteDao {
     suspend fun getAllNotes(): List<Note>?
 
     @Update
-    suspend fun updateNote(note:Note)
+    suspend fun updateNote(note: Note)
 
     @Query("DELETE FROM note WHERE id=:id")
     suspend fun deleteNoteById(id: Int)
