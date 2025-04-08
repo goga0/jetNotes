@@ -26,6 +26,7 @@ import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -48,7 +49,7 @@ fun MainScreenScaffold(
         drawerState = drawerState ,
         drawerContent = {
             ModalDrawerSheet {
-                Text("")
+                Text(" ")
                 NavigationDrawerItem(
                     label = {},
                     onClick = {},
@@ -65,22 +66,24 @@ fun MainScreenScaffold(
                         containerColor = MaterialTheme.colorScheme.primaryContainer
                     ),
                     title = {
-                        Row {
-                            Icon(
-                                modifier = Modifier
-                                    .padding(top = 2.dp)
-                                    .clickable {
-                                        scope.launch {
-                                            drawerState.apply {
-                                                if (isOpen) open() else close()
-                                            }
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            IconButton(
+                                onClick = {
+                                    scope.launch {
+                                        drawerState.apply {
+                                            if (isOpen) open() else close()
                                         }
-                                    },
-                                imageVector = Icons.AutoMirrored.Filled.List,
-                                contentDescription = stringResource(R.string.NavigationDrawerDescription)
-                            )
+                                    }
+                                }
+                            ){
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Filled.List,
+                                    contentDescription = stringResource(R.string.NavigationDrawerDescription)
+                                )
+                            }
                             Text(
-                                modifier = Modifier.padding(start = 7.dp),
                                 text = stringResource(R.string.app_name)
                             )
                         }

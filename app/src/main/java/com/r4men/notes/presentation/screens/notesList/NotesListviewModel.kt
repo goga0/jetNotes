@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
+@Suppress("REDUNDANT_ELSE_IN_WHEN")
 @HiltViewModel
 class NotesListViewModel @Inject constructor(private val noteRepository: NoteRepository) : ViewModel() {
 
@@ -19,7 +20,7 @@ class NotesListViewModel @Inject constructor(private val noteRepository: NoteRep
     val state = _state
         .onStart {
             if (!hasLoadedInitialData) {
-                /** Load initial data here **/
+                _state.value.notes  = noteRepository.getAllNotes()
                 hasLoadedInitialData = true
             }
         }
@@ -31,7 +32,7 @@ class NotesListViewModel @Inject constructor(private val noteRepository: NoteRep
 
     fun onAction(action: NotesListAction) {
         when (action) {
-            else -> TODO("Handle actions")
+            else -> {}
         }
     }
 

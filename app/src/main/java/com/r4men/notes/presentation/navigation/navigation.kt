@@ -29,6 +29,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -37,6 +38,9 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.r4men.notes.R
 import com.r4men.notes.presentation.screens.noteDetails.NoteDetailsRoot
+import com.r4men.notes.presentation.screens.noteDetails.NoteDetailsViewModel
+import com.r4men.notes.presentation.screens.notesList.NotesListRoot
+import com.r4men.notes.presentation.screens.notesList.NotesListViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -60,18 +64,17 @@ fun SetupNavGraph(){
     NavHost(navController, startDestination = Screens.NotesList) {
 
         composable<Screens.NotesList> {
-
-
-
+            val viewModel: NotesListViewModel = hiltViewModel()
+            NotesListRoot(viewModel)
         }
 
         composable<Screens.NoteDetails> { backStackEntry ->
+            val viewModel: NoteDetailsViewModel = hiltViewModel()
             val args = backStackEntry.toRoute<Screens.NoteDetails>()
-            NoteDetailsRoot(noteId = args.noteId)
+            NoteDetailsRoot(viewModel = viewModel,noteId = args.noteId)
         }
 
         composable<Screens.Settings> {
-
 
         }
     }

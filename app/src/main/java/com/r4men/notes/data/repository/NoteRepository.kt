@@ -5,11 +5,14 @@ import com.r4men.notes.data.models.Note
 import com.r4men.notes.domain.NoteRepository
 import javax.inject.Inject
 
-
 class NoteRepositoryImpl @Inject constructor(private val noteDao: NoteDao) : NoteRepository {
 
     override suspend fun createNote(note: Note) {
         noteDao.createNote(note)
+    }
+
+    override suspend fun getNoteById(id: Int): Note{
+        return noteDao.getNoteById(id)
     }
 
     override suspend fun getAllNotes(): List<Note>? {

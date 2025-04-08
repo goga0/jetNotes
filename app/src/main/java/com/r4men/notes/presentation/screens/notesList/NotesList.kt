@@ -18,20 +18,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.r4men.notes.R
 import com.r4men.notes.data.models.Note
 import com.r4men.notes.presentation.ui.components.MainScreenScaffold
 import com.r4men.notes.presentation.ui.theme.NotesTheme
+import java.time.LocalDateTime
+import java.time.ZonedDateTime
 
 @Composable
 fun NotesListRoot(
@@ -59,7 +58,7 @@ fun NotesListScreen(
                 .background(color = MaterialTheme.colorScheme.onSecondary)
         ) {
             if(state.notes != null){
-                NotesList(notes = state.notes, state = lazyGridState)
+                NotesList(notes = state.notes!!, state = lazyGridState)
             } else {
                 Box(
                     modifier = Modifier.fillMaxSize()
@@ -105,7 +104,7 @@ fun NotesList(
             }
             Row {
                 Text(
-                    text = note.title,
+                    text = note.title ?: "Текстовая заметка от ${note.lastSaveDate}",
                     fontWeight = FontWeight.Medium
                 )
             }
