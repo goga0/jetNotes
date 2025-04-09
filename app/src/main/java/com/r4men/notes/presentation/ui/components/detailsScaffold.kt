@@ -37,7 +37,7 @@ import com.r4men.notes.R
 @Preview
 @Composable
 fun DetailsScaffold(
-    title: String = "Notes",
+    title: String? = "",
     onBackPressed: () -> Unit = {},
     content: @Composable (PaddingValues) -> Unit ={},
 ){
@@ -62,7 +62,7 @@ fun DetailsScaffold(
                                 )
                             }
                             Text(
-                                text = stringResource(R.string.app_name),
+                                text = title ?: "Заголовок",
                             )
                         }
                     },

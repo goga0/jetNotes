@@ -4,9 +4,8 @@ import com.r4men.notes.data.dao.NoteDao
 import com.r4men.notes.data.models.Note
 
 interface NoteRepository {
-    suspend fun createNote(note: Note)
-    suspend fun getNoteById(id: Int): Note
-    suspend fun getAllNotes(): List<Note>?
-    suspend fun updateNote(note: Note)
-    suspend fun deleteNote(id: Int)
+    suspend fun createNote(note: Note): Result<Unit>
+    suspend fun getNoteById(id: Int): Result<Note?>
+    suspend fun getAllNotes(): Result<List<Note>?>
+    suspend fun deleteNote(id: Int): Result<Unit>
 }

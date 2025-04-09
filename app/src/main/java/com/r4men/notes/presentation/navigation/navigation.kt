@@ -65,13 +65,13 @@ fun SetupNavGraph(){
 
         composable<Screens.NotesList> {
             val viewModel: NotesListViewModel = hiltViewModel()
-            NotesListRoot(viewModel)
+            NotesListRoot(viewModel, navController)
         }
 
         composable<Screens.NoteDetails> { backStackEntry ->
             val viewModel: NoteDetailsViewModel = hiltViewModel()
             val args = backStackEntry.toRoute<Screens.NoteDetails>()
-            NoteDetailsRoot(viewModel = viewModel,noteId = args.noteId)
+            NoteDetailsRoot(viewModel = viewModel,noteId = args.noteId, navController)
         }
 
         composable<Screens.Settings> {

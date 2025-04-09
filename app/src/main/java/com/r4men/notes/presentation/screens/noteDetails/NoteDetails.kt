@@ -10,9 +10,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.r4men.notes.data.models.Note
 import com.r4men.notes.presentation.ui.components.DetailsScaffold
 import com.r4men.notes.presentation.ui.theme.NotesTheme
@@ -20,14 +23,16 @@ import com.r4men.notes.presentation.ui.theme.NotesTheme
 @Composable
 fun NoteDetailsRoot(
     viewModel: NoteDetailsViewModel = hiltViewModel(),
-    note: Note
+    noteId: Int,
+    navController: NavHostController
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     NoteDetailsScreen(
         state = state,
         onAction = viewModel::onAction,
-        note = note
+        noteId = noteId,
+        navController
     )
 }
 
@@ -36,14 +41,21 @@ fun NoteDetailsRoot(
 fun NoteDetailsScreen(
     state: NoteDetailsState,
     onAction: (NoteDetailsAction) -> Unit,
-    note: Note = Note(id = 0, lastSaveDate = "1970-01-01", null, null)
+    noteId: Int = 0,
+    navController: NavHostController
 ) {
 
     LaunchedEffect(Unit) {
-        state.note = note
+        state.noteId = noteId
     }
 
-    DetailsScaffold{ innerPadding ->
+    DetailsScaffold(
+        title = state.note?.title ?: "Заметки",
+        onBackPressed = {
+            onAction(NoteDetailsAction.SaveNote)
+            navController.popBackStack()
+        }
+    ){ innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -51,10 +63,14 @@ fun NoteDetailsScreen(
         ) {
             TextField(
                 modifier = Modifier.fillMaxSize(),
-                value = state.note?.title ?: "",
+                value = state.note?.noteValue ?: "",
                 onValueChange = { onAction(NoteDetailsAction.NoteValueChanged(it)) },
                 colors = textFieldColors(
-
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    disabledIndicatorColor = Color.Transparent
                 )
             )
         }
@@ -68,7 +84,8 @@ private fun Preview() {
         NoteDetailsScreen(
             state = NoteDetailsState(),
             onAction = {},
-
+            noteId = 0,
+            navController = rememberNavController()
         )
     }
 }

@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey
 
 @Entity
 class Note(
-    @PrimaryKey(autoGenerate = true) var id: Int,
-    @ColumnInfo var lastSaveDate: String,
+    @PrimaryKey(autoGenerate = true) var id: Int?,
+    @ColumnInfo var lastSaveDate: String?,
     @ColumnInfo var title: String?,
     @ColumnInfo var noteValue: String?
 )

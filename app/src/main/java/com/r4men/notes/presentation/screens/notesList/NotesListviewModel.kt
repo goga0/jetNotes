@@ -2,12 +2,15 @@ package com.r4men.notes.presentation.screens.notesList
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.r4men.notes.data.models.Note
 import com.r4men.notes.domain.NoteRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @Suppress("REDUNDANT_ELSE_IN_WHEN")
@@ -20,7 +23,7 @@ class NotesListViewModel @Inject constructor(private val noteRepository: NoteRep
     val state = _state
         .onStart {
             if (!hasLoadedInitialData) {
-                _state.value.notes  = noteRepository.getAllNotes()
+                loadNotes()
                 hasLoadedInitialData = true
             }
         }
@@ -32,8 +35,15 @@ class NotesListViewModel @Inject constructor(private val noteRepository: NoteRep
 
     fun onAction(action: NotesListAction) {
         when (action) {
-            else -> {}
+            is NotesListAction.RefreshNotes -> loadNotes()
         }
     }
 
+    fun loadNotes(){
+        viewModelScope.launch(Dispatchers.IO){
+            noteRepository.getAllNotes()
+                .onSuccess { _state.value.notes = it }
+                .onFailure { error -> _state.value.errorMessage = "$error" }
+        }
+    }
 }
